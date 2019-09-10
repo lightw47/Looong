@@ -136,6 +136,34 @@ LooongInt<n> LooongInt<n>::operator>>(size_t val) const
     return res >>= val;
 }
 
+// Conversion to bool
+template <size_t n>
+LooongInt<n>::operator bool(void) const
+{
+    return data.any();
+}
+
+// Logical negation
+template <size_t n>
+bool LooongInt<n>::operator!(void) const
+{
+    return !static_cast<bool>(*this);
+}
+
+// Logical conjunction
+template <size_t n>
+bool LooongInt<n>::operator&&(const LooongInt<n> &other) const
+{
+    return static_cast<bool>(*this) && static_cast<bool>(other);
+}
+
+// Logical disjunction
+template <size_t n>
+bool LooongInt<n>::operator||(const LooongInt<n> &other) const
+{
+    return static_cast<bool>(*this) || static_cast<bool>(other);
+}
+
 // space for other operators
 
 // Swap function

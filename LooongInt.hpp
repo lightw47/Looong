@@ -46,7 +46,10 @@ public:
     LooongInt operator<<(size_t val) const;
     LooongInt operator>>(size_t val) const;
     
-    // Logical operator
+    // Conversion to bool
+    explicit operator bool(void) const;
+    
+    // Logical operators
     bool operator!(void) const;
     bool operator&&(const LooongInt &other) const;
     bool operator||(const LooongInt &other) const;
