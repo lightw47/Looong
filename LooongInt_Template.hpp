@@ -222,7 +222,135 @@ bool LooongInt<n>::operator>=(const LooongInt<n> &other) const
     return !( (*this) < other );
 }
 
-// space for other operators
+// Compound sum and assignment
+template <size_t n>
+LooongInt<n> &LooongInt<n>::operator+=(const LooongInt<n> &other)
+{
+    bitset<n> carry;
+    bitset<n> op(other.data);
+    while (op.any())
+    {
+        carry = (data & op) << 1;
+        data ^= op;
+        op = carry;
+    }
+    return *this;
+}
+
+// Compoud subtraction and assignment
+template <size_t n>
+LooongInt<n> &LooongInt<n>::operator-=(const LooongInt<n> &other)
+{
+    return (*this) += -other;
+}
+
+// Compoud multiplication and assignment
+template <size_t n>
+LooongInt<n> &LooongInt<n>::operator*=(const LooongInt<n> &other)
+{
+    LooongInt<n> m(*this);
+    data.reset();
+    for (size_t i = 0; i < n; ++i)
+    {
+        if (other.data[i])
+            (*this) += m;
+            
+        m <<= 1;
+    }
+
+    return *this;
+}
+
+// Compoud division and assignment
+template <size_t n>
+LooongInt<n> &LooongInt<n>::operator/=(const LooongInt<n> &other)
+{
+    return *this;
+}
+
+// Compoud modulo and assignment
+template <size_t n>
+LooongInt<n> &LooongInt<n>::operator%=(const LooongInt<n> &other)
+{
+    return *this;
+}
+
+// Addition
+template <size_t n>
+LooongInt<n> LooongInt<n>::operator+(const LooongInt<n> &other) const
+{
+    LooongInt<n> res(*this);
+    return res += other;
+}
+
+// Subtraction
+template <size_t n>
+LooongInt<n> LooongInt<n>::operator-(const LooongInt<n> &other) const
+{
+    LooongInt<n> res(*this);
+    return res -= other;
+}
+
+// Multiplication
+template <size_t n>
+LooongInt<n> LooongInt<n>::operator*(const LooongInt<n> &other) const
+{
+    LooongInt<n> res(*this);
+    return res *= other;
+}
+
+// Diviion
+template <size_t n>
+LooongInt<n> LooongInt<n>::operator/(const LooongInt<n> &other) const
+{
+    LooongInt<n> res(*this);
+    return res /= other;
+}
+
+// Modulo (remainder of division)
+template <size_t n>
+LooongInt<n> LooongInt<n>::operator%(const LooongInt<n> &other) const
+{
+    LooongInt<n> res(*this);
+    return res %= other;
+}
+
+// unary minus
+template <size_t n>
+LooongInt<n> LooongInt<n>::operator-(void) const
+{
+    LooongInt<n> res(*this);
+    res.Flip();
+    return ++res;
+}
+
+// prefix increment
+template <size_t n>
+LooongInt<n> &LooongInt<n>::operator++(void)
+{
+    return (*this) += LooongInt<n>(1);
+}
+
+// prefix decrement
+template <size_t n>
+LooongInt<n> &LooongInt<n>::operator--(void)
+{
+    return (*this) += LooongInt<n>(-1);
+}
+
+// postfix increment
+template <size_t n>
+LooongInt<n> LooongInt<n>::operator++(int a) const
+{
+    return ++LooongInt<n>(*this);
+}
+
+// postfix decrement
+template <size_t n>
+LooongInt<n> LooongInt<n>::operator--(int a) const
+{
+    return --LooongInt<n>(*this);
+}
 
 // Swap function
 template <size_t n>
@@ -237,6 +365,21 @@ LooongInt<n> &LooongInt<n>::Flip(void)
 {
     data.flip();
     return *this;
+}
+
+// Absolute value
+template <size_t n>
+LooongInt<n> LooongInt<n>::Abs(void) const
+{
+    return data[n-1] ? -(*this) : (*this);
+}
+
+// Sign
+template <size_t>
+char LooongInt<n>::Sign(void) const
+{
+    LooongInt<n> zero();
+    return LooongInt<n>(( (*this > zero) ) - ( (*this) < zero ));
 }
 
 /*******************************************************************************

@@ -78,14 +78,18 @@ public:
     LooongInt operator-(void) const;
     LooongInt &operator++(void);
     LooongInt &operator--(void);
-    LooongInt operator++(int) const;
-    LooongInt operator--(int) const;
+    LooongInt operator++(int a) const;
+    LooongInt operator--(int a) const;
     
     // Swap function
     void Swap(LooongInt &other);
     
     // Flip all bits in data
     LooongInt &Flip(void);
+    
+    // Mathematical functions
+    LooongInt Abs(void) const;
+    LooongInt Sign(void) const;
     
     // data bits
     std::bitset<n> data;
