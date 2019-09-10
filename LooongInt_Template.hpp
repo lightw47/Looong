@@ -320,8 +320,7 @@ template <size_t n>
 LooongInt<n> LooongInt<n>::operator-(void) const
 {
     LooongInt<n> res(*this);
-    res.Flip();
-    return ++res;
+    return res.TwosComp();
 }
 
 // prefix increment
@@ -375,11 +374,44 @@ LooongInt<n> LooongInt<n>::Abs(void) const
 }
 
 // Sign
-template <size_t>
-char LooongInt<n>::Sign(void) const
+template <size_t n>
+LooongInt<n> LooongInt<n>::Sign(void) const
 {
     LooongInt<n> zero();
     return LooongInt<n>(( (*this > zero) ) - ( (*this) < zero ));
+}
+
+// Two's complement (additive inverse
+template <size_t n>
+LooongInt<n> &LooongInt<n>::TwosComp(void)
+{
+    Flip();
+    return operator++();
+}
+
+// Find the leftmost set bit (FLS = Find Last Set)
+template <size_t n>
+size_t LooongInt<n>::FLS(void) const
+{
+    size_t i;
+    for (i = n-1; i != -1; --i)
+    {
+        if (data[i])
+            break;
+    }
+    
+    return i;
+}
+
+// Compute the division of the dividend by the divisor
+// returns the quotient, modulo remains in the dividend register
+template <size_t n>
+LooongInt<n> LooongInt<n>::Division(LooongInt<n> &dividend, LooongInt<n> divisor)
+{
+    LooongInt<n> quotient;
+    
+    
+    return quotient;
 }
 
 /*******************************************************************************

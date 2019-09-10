@@ -90,7 +90,14 @@ public:
     // Mathematical functions
     LooongInt Abs(void) const;
     LooongInt Sign(void) const;
+    LooongInt &TwosComp(void);
+    size_t FLS(void) const;
     
+    
+private:
+    static LooongInt Division(LooongInt &dividend, LooongInt divisor);
+    
+public:
     // data bits
     std::bitset<n> data;
 };
