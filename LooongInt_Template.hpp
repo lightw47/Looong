@@ -18,6 +18,13 @@ template <size_t n>
 LooongInt<n>::LooongInt(unsigned long l) :
     data(l)
 {
+    unsigned long sizeul = 8*sizeof(unsigned long);
+    if (n > sizeul && data[min(sizeul, n)-1])
+    {
+        bitset<n> m1(-1);
+        m1.flip();
+        data |= m1;
+    }
 }
 
 // Build from bitset
@@ -175,7 +182,44 @@ bool LooongInt<n>::operator==(const LooongInt<n> &other) const
 template <size_t n>
 bool LooongInt<n>::operator!=(const LooongInt<n> &other) const
 {
-    return !((*this) == other);
+    return !( (*this) == other );
+}
+
+// Compare (less than)
+template <size_t n>
+bool LooongInt<n>::operator<(const LooongInt<n> &other) const
+{
+    if (data[n-1] != other.data[n-1])
+        return data[n-1];
+        
+    for (unsigned int i = n-2; i != 0xffffffff; --i)
+    {
+        if (data[i] != other.data[i])
+            return other.data[i];
+    }
+    
+    return false;
+}
+
+// Compare (more than)
+template <size_t n>
+bool LooongInt<n>::operator>(const LooongInt<n> &other) const
+{
+    return !( (*this) <= other );
+}
+
+// Compare (less than or equals to)
+template <size_t n>
+bool LooongInt<n>::operator<=(const LooongInt<n> &other) const
+{
+    return (*this) == other || (*this) < other;
+}
+
+// Compare (more than or equals to)
+template <size_t n>
+bool LooongInt<n>::operator>=(const LooongInt<n> &other) const
+{
+    return !( (*this) < other );
 }
 
 // space for other operators
