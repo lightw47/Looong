@@ -1,7 +1,12 @@
 #ifndef LOOONG_LOOONG_INT_HPP
 #define LOOONG_LOOONG_INT_HPP
 
+#include <iostream>
 #include <bitset>
+
+/*******************************************************************************
+    class template declatation
+*/
 
 template <size_t n>
 class LooongInt
@@ -9,7 +14,7 @@ class LooongInt
 public:
 
     // Default constructor
-    LooongInt(void);
+    LooongInt<n>(void);
     
     // Construct from known built-in types
     LooongInt(unsigned long l);
@@ -76,9 +81,17 @@ public:
     // Swap function
     void Swap(LooongInt &other);
     
-private:
-    std::bitset<n> _data;
+    // data bits
+    std::bitset<n> data;
 };
+
+/*******************************************************************************
+    function template declatations
+*/
+
+// stream output
+template <size_t n>
+std::ostream &operator<<(std::ostream &stream, const LooongInt<n> &li);
 
 #include "LooongInt_Template.hpp"
 

@@ -2,31 +2,35 @@
 
 using namespace std;
 
+/*******************************************************************************
+    class template implementation
+*/
+
 // Default constructor
 template <size_t n>
-LooongInt<n>::LooongInt<n>(void) :
-    _data()
+LooongInt<n>::LooongInt(void) :
+    data()
 {
 }
 
 // Construct from known built-in types
 template <size_t n>
-LooongInt<n>::LooongInt<n>(unsigned long l) :
-    _data(l)
+LooongInt<n>::LooongInt(unsigned long l) :
+    data(l)
 {
 }
 
 // Build from bitset
 template <size_t n>
-LooongInt<n>::LooongInt<n>(const bitset<n> &b) :
-    _data(b)
+LooongInt<n>::LooongInt(const bitset<n> &b) :
+    data(b)
 {
 }
 
 // Copy constructor
 template <size_t n>
-LooongInt<n>::LooongInt<n>(const LooongInt &other) :
-    _data(other._data)
+LooongInt<n>::LooongInt(const LooongInt &other) :
+    data(other.data)
 {
 }
 
@@ -50,5 +54,18 @@ LooongInt<n> &LooongInt<n>::operator=(LooongInt<n> other)
 template <size_t n>
 void LooongInt<n>::Swap(LooongInt<n> &other)
 {
-    swap(_data, other._data);
+    swap(data, other.data);
 }
+
+/*******************************************************************************
+    function template implementations
+*/
+
+// stream output
+template <size_t n>
+ostream &operator<<(ostream &stream, const LooongInt<n> &li)
+{
+    stream << li.data;
+    return stream;
+}
+
