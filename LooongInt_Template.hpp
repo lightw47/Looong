@@ -164,6 +164,20 @@ bool LooongInt<n>::operator||(const LooongInt<n> &other) const
     return static_cast<bool>(*this) || static_cast<bool>(other);
 }
 
+// Compare (equals to)
+template <size_t n>
+bool LooongInt<n>::operator==(const LooongInt<n> &other) const
+{
+    return data == other.data;
+}
+
+// Compare (not equals to)
+template <size_t n>
+bool LooongInt<n>::operator!=(const LooongInt<n> &other) const
+{
+    return !((*this) == other);
+}
+
 // space for other operators
 
 // Swap function
