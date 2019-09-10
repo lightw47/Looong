@@ -9,25 +9,19 @@ class LooongInt
 public:
 
     // Default constructor
-    LooongInt(void)
+    LooongInt(void);
     
     // Construct from known built-in types
-    LooongInt(bool b);
-    LooongInt(char c);
-    LooongInt(unsigned char c);
-    LooongInt(int i);
-    LooongInt(unsigned int i);
-    LooongInt(long l);
     LooongInt(unsigned long l);
    
     // Build from bitset
-    LooongInt(const std::bitset<n> &other);
-    
-    // Destructor
-    ~LooongInt(void);
+    LooongInt(const std::bitset<n> &b);
     
     // Copy constructor
     LooongInt(const LooongInt &other);
+    
+    // Destructor
+    ~LooongInt(void);
     
     // Copy assignment operator
     LooongInt &operator=(LooongInt other);
@@ -85,6 +79,8 @@ public:
 private:
     std::bitset<n> _data;
 };
+
+#include "LooongInt_Template.hpp"
 
 #endif //LOOONG_LOOONG_INT_HPP
 
