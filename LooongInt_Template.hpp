@@ -104,6 +104,38 @@ LooongInt<n> LooongInt<n>::operator~(void) const
     return res.Flip();
 }
 
+// Compound bitshift to left and assignment
+template <size_t n>
+LooongInt<n> &LooongInt<n>::operator<<=(size_t val)
+{
+    data <<= val;
+    return *this;
+}
+
+// Compound bitshift to right and assignment
+template <size_t n>
+LooongInt<n> &LooongInt<n>::operator>>=(size_t val)
+{
+    data >>= val;
+    return *this;
+}
+
+// bitshift to left
+template <size_t n>
+LooongInt<n> LooongInt<n>::operator<<(size_t val) const
+{
+    LooongInt res(*this);
+    return res <<= val;
+}
+
+// bitshift to right
+template <size_t n>
+LooongInt<n> LooongInt<n>::operator>>(size_t val) const
+{
+    LooongInt res(*this);
+    return res >>= val;
+}
+
 // space for other operators
 
 // Swap function

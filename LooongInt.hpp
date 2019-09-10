@@ -41,11 +41,24 @@ public:
     LooongInt operator~(void) const;
     
     // Bit shift operators
-    LooongInt &operator<<=(int val);
-    LooongInt &operator>>=(int val);
-    LooongInt operator>>(int val) const;
-    LooongInt operator<<(int val) const;
+    LooongInt &operator<<=(size_t val);
+    LooongInt &operator>>=(size_t val);
+    LooongInt operator<<(size_t val) const;
+    LooongInt operator>>(size_t val) const;
     
+    // Logical operator
+    bool operator!(void) const;
+    bool operator&&(const LooongInt &other) const;
+    bool operator||(const LooongInt &other) const;
+
+    // Comparison operators
+    bool operator==(const LooongInt &other) const;
+    bool operator!=(const LooongInt &other) const;
+    bool operator<(const LooongInt &other) const;
+    bool operator>(const LooongInt &other) const;
+    bool operator<=(const LooongInt &other) const;
+    bool operator>=(const LooongInt &other) const;
+
     // Binary arithmetic operators
     LooongInt &operator+=(const LooongInt &other);
     LooongInt &operator-=(const LooongInt &other);
@@ -64,19 +77,6 @@ public:
     LooongInt &operator--(void);
     LooongInt operator++(int) const;
     LooongInt operator--(int) const;
-    
-    // Comparison operators
-    bool operator==(const LooongInt &other) const;
-    bool operator!=(const LooongInt &other) const;
-    bool operator<(const LooongInt &other) const;
-    bool operator>(const LooongInt &other) const;
-    bool operator<=(const LooongInt &other) const;
-    bool operator>=(const LooongInt &other) const;
-
-    // Logical operator
-    bool operator!(void) const;
-    bool operator&&(const LooongInt &other) const;
-    bool operator||(const LooongInt &other) const;
     
     // Swap function
     void Swap(LooongInt &other);
