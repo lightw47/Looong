@@ -40,7 +40,7 @@ LooongInt<n>::~LooongInt(void)
 template <size_t n>
 LooongInt<n> &LooongInt<n>::operator=(LooongInt<n> other)
 {
-    swap(*this, other);
+    Swap(other);
     return *this;
 }
 
