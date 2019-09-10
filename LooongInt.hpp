@@ -14,7 +14,7 @@ class LooongInt
 public:
 
     // Default constructor
-    LooongInt<n>(void);
+    LooongInt(void);
     
     // Construct from known built-in types
     LooongInt(unsigned long l);
@@ -80,6 +80,9 @@ public:
     
     // Swap function
     void Swap(LooongInt &other);
+    
+    // Flip all bits in data
+    LooongInt &Flip(void);
     
     // data bits
     std::bitset<n> data;
