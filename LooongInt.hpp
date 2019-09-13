@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <bitset>
+#include <string>
 
 /*******************************************************************************
     class template declatation
@@ -94,8 +95,9 @@ public:
     size_t FLS(void) const;
     
     
-private:
-    static LooongInt Division(LooongInt &dividend, LooongInt divisor);
+//private:
+    static void Division(LooongInt &quotient, LooongInt &dividend, LooongInt divisor);
+    static std::string Decimal(const LooongInt &li);
     
 public:
     // data bits

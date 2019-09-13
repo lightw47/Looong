@@ -1,4 +1,6 @@
 #include <algorithm>
+#include <vector>
+#include <sstream>
 
 using namespace std;
 
@@ -265,6 +267,8 @@ LooongInt<n> &LooongInt<n>::operator*=(const LooongInt<n> &other)
 template <size_t n>
 LooongInt<n> &LooongInt<n>::operator/=(const LooongInt<n> &other)
 {
+    LooongInt<n> nouse(*this);
+    Division(*this, nouse, other);
     return *this;
 }
 
@@ -272,6 +276,8 @@ LooongInt<n> &LooongInt<n>::operator/=(const LooongInt<n> &other)
 template <size_t n>
 LooongInt<n> &LooongInt<n>::operator%=(const LooongInt<n> &other)
 {
+    LooongInt<n> nouse;
+    Division(nouse, *this, other);
     return *this;
 }
 
@@ -406,12 +412,85 @@ size_t LooongInt<n>::FLS(void) const
 // Compute the division of the dividend by the divisor
 // returns the quotient, modulo remains in the dividend register
 template <size_t n>
-LooongInt<n> LooongInt<n>::Division(LooongInt<n> &dividend, LooongInt<n> divisor)
+void LooongInt<n>::Division(LooongInt<n> &quotient, LooongInt<n> &dividend, LooongInt<n> divisor)
 {
-    LooongInt<n> quotient;
+    quotient.data.reset();
+    bool dividend_negative = false;
+    bool divisor_negative = false;
+    size_t dividend_degree, divisor_degree, degree_diff;
+
+    if (dividend < 0)
+    {
+        dividend_negative = true;
+        dividend.TwosComp();
+    }
+
+    if (divisor < 0)
+    {
+        divisor_negative = true;
+        divisor.TwosComp();
+    }
+
+    if (dividend < divisor)
+        goto division_end;
     
-    
-    return quotient;
+    dividend_degree = dividend.FLS();
+    divisor_degree = divisor.FLS();
+    degree_diff = dividend_degree - divisor_degree;
+    divisor <<= degree_diff;
+
+    for (size_t i = degree_diff; i != -1; --i)
+    {
+        if (dividend >= divisor)
+        {
+            dividend -= divisor;
+            quotient.data[i] = 1;
+        }
+
+        divisor >>= 1;
+    }
+
+    division_end:
+    if (dividend_negative)
+        dividend.TwosComp();
+    if (dividend_negative != divisor_negative)
+        quotient.TwosComp();
+}
+
+template <size_t n>
+string LooongInt<n>::Decimal(const LooongInt<n> &li)
+{
+    vector<char> dec;
+
+    LooongInt<n> dec_char(li);
+    LooongInt<n> q(1);
+    LooongInt<n> ten(10);
+    LooongInt<n> zero;
+    bool neg = false;
+
+    if (dec_char < zero)
+    {
+        neg = true;
+        dec_char.TwosComp();
+    }
+
+    while(q)
+    {
+        Division(q, dec_char, ten);
+        dec.push_back(static_cast<char>(dec_char.data.to_ulong())+48);
+        dec_char = q;
+    }
+
+    if (neg)
+        dec.push_back('-');
+
+    stringstream ss;
+    for (unsigned int i = dec.size()-1; i != 0xffffffff; --i)
+    {
+        ss << dec[i];
+    }
+
+    return ss.str();
 }
 
 /*******************************************************************************
@@ -422,7 +501,7 @@ LooongInt<n> LooongInt<n>::Division(LooongInt<n> &dividend, LooongInt<n> divisor
 template <size_t n>
 ostream &operator<<(ostream &stream, const LooongInt<n> &li)
 {
-    stream << li.data;
+    stream << LooongInt<n>::Decimal(li);
     return stream;
 }
 
